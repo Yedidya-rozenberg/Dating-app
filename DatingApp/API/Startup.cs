@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using API.Interfaces;
 using API.Entities;
 using API.Servises;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API
 {
@@ -38,6 +40,13 @@ namespace API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            });
+            services.AddCors();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer (options => options.TokenValidationParameters = new TokenValidationParameters{
+              ValidateIssuerSigningKey = true
+                //פה צריך להוסיף עוד בדיקות
             });
         }
 

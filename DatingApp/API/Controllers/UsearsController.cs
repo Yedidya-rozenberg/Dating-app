@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,12 +21,14 @@ public UsersController(DataContext context)
 }         
 
 [HttpGet]
+[AllowAnonymous]
 public async Task< ActionResult<IEnumerable<AppUser>>>GetUsers()
 {
     var users = await _dataContext.AppUsers.ToListAsync();
     return users;
 }
 
+[Authorize]
 [HttpGet("{id}")]
 public ActionResult<AppUser>GetUserByID(int ID)
 {
