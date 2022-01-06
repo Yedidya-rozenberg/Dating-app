@@ -8,17 +8,18 @@ using API.DTOs;
 using Microsoft.EntityFrameworkCore;
 using API.Servises;
 using Microsoft.Extensions.Configuration;
+using API.Interfaces;
 
 namespace API.Controllers
 {
     public class AccountController :BaseApiController
     {
         private readonly DataContext _context;
-        private readonly TokenService _tokenService;
-        public AccountController(DataContext Context,IConfiguration config)
+        private readonly ITokenService _tokenService;
+        public AccountController(DataContext Context,ITokenService tokenService)
         {
          _context = Context;
-         _tokenService = new TokenService(config); 
+         _tokenService = tokenService; 
         }
         [HttpPost("Register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
