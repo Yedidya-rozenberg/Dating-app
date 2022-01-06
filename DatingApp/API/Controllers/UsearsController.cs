@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.ComTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,18 +24,24 @@ public UsersController(DataContext context)
 
 [HttpGet]
 [AllowAnonymous]
-public async Task< ActionResult<IEnumerable<AppUser>>>GetUsers()
+public async Task< ActionResult<IEnumerable<string>>>GetUsers()
 {
     var users = await _dataContext.AppUsers.ToListAsync();
-    return users;
+    var userNames = new List<string>();
+        foreach (var user in users)
+        {
+            userNames.Add(user.UserName);
+        }
+     
+    return userNames;
 }
 
 [Authorize]
 [HttpGet("{id}")]
-public ActionResult<AppUser>GetUserByID(int ID)
+public async Task<ActionResult<string>>GetUserByID(int ID)
 {
-var user = _dataContext.AppUsers.Find(ID);
-return user;
+var user = await _dataContext.AppUsers.FindAsync(ID);
+return user.UserName;
 }
 
 

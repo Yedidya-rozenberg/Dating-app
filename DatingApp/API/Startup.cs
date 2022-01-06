@@ -1,3 +1,4 @@
+using System.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,24 +19,25 @@ using API.Entities;
 using API.Servises;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using API.Extantions;
 
 namespace API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration config)
         {
-            Configuration = configuration;
+            _config = config;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration _config { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ITokenService,TokenService> ();
-            services.AddDbContext<DataContext> 
-            (options=> options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+             services.AddApplicationServices(_config);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -43,11 +45,8 @@ namespace API
             });
             services.AddCors();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer (options => options.TokenValidationParameters = new TokenValidationParameters{
-              ValidateIssuerSigningKey = true
-                //פה צריך להוסיף עוד בדיקות
-            });
+            services.AddIdentityServices(_config);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +68,8 @@ namespace API
             .AllowAnyHeader()
             .AllowAnyMethod()
             .WithOrigins("https://localhost:4200"));
+            
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
