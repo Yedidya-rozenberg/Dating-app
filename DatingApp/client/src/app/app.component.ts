@@ -1,5 +1,6 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from './services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent implements  OnInit {
   title = 'The dating app';
   users:any;
 
-  constructor(private http:HttpClient){
+  constructor(private http: HttpClient, private accountService: AccountService) {
 
   }
   ngOnInit(): void {
@@ -18,14 +19,14 @@ this.GetUsers();
   }
   GetUsers() {
 this.http.get('https://localhost:5001/api/users').subscribe(
-//   {
-// next: (Date) => {this.users = Date;},
-// error: (err)=>{console.log(err);}
+  {
+next: (Date) => {this.users = Date; console.log(Date)},
+error: (err)=>{console.log(err);}
 
-// }
-res=> {this.users = res;},
-err => {console.log(err);},
-() => {console.log('Users Loaded');}
+}
+// (res)=> {this.users = res;},
+// (err) => {console.log(err);},
+// () => {console.log('Users Loaded');}
 )
 }
 }
