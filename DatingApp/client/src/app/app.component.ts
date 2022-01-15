@@ -15,19 +15,26 @@ export class AppComponent implements  OnInit {
 
   }
   ngOnInit(): void {
-this.GetUsers();
-  }
-  GetUsers() {
-this.http.get('https://localhost:5001/api/users').subscribe(
-  {
-next: (Date) => {this.users = Date; console.log(Date)},
-error: (err)=>{console.log(err);}
+// this.GetUsers();
+this.setCurrentUser();
 
-}
-// (res)=> {this.users = res;},
-// (err) => {console.log(err);},
-// () => {console.log('Users Loaded');}
-)
-}
+  }
+  setCurrentUser() {
+    const userFromLS:any = localStorage.getItem('user');
+    const user = JSON.parse(userFromLS);
+    this.accountService.setCurrentUser(user);
+  }
+//   GetUsers() {
+// this.http.get('https://localhost:5001/api/users').subscribe(
+//   {
+// next: (Date) => {this.users = Date; console.log(Date)},
+// error: (err)=>{console.log(err);}
+
+// }
+// // (res)=> {this.users = res;},
+// // (err) => {console.log(err);},
+// // () => {console.log('Users Loaded');}
+// )
+// }
 }
 

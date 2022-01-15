@@ -1,35 +1,35 @@
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark">
-        <div class="container">
-      <a class="navbar-brand" href="#">Dating app</a>
-        <ul *ngIf="loggedin" class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Matches</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Lists</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Masseges</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" (click)="logout()" >logout</a>
-          </li>
-        </ul>
-        <div class="dropdown" *ngIf="loggedin" dropdown>
-          <a class="dropdown-toggle text-light" href="#" dropdownToggle >Welcome user</a>
-          <div class="dropdown-menu" *dropdownMenu>
-            <a class="dropdown-item" >Edit Profile</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" (click)="logout()">Logout</a>
-          </div>
+<nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Dating App</a>
+
+      <ul *ngIf="loggedIn" class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Matches</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Lists</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Messages</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+
+      <div class="dropdown" *ngIf="loggedIn" dropdown>
+        <a class="dropdown-toggle text-light" href="#" dropdownToggle >Welcome user</a>
+        <div class="dropdown-menu mt-3" *dropdownMenu>
+          <a class="dropdown-item" >Edit Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>
-        <form #loginForm ="ngForm" *ngIf="!loggedin" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off" >
-          <input name="UserName"  class="form-control mr-sm-2" [(ngModel)] = "model.UserName" type="text" placeholder="Username">
-          <input name="Password" class="form-control mr-sm-2" [(ngModel)]= "model.Password" type="text" placeholder="Passwors">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">login</button>
-        </form>
       </div>
-    <!-- </div> -->
-    </nav>
-  </header>
+
+      <form *ngIf="!loggedIn" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off">
+        <input name="username"  [(ngModel)]="model.username"  class="form-control mr-sm-2" type="text" placeholder="Username">
+        <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2" type="password" placeholder="Password">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+      </form>
+    </div>
+</nav>
