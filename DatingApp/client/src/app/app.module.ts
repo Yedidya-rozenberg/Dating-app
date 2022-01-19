@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,9 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-import { MemberListComponent } from './members/member-list/member-list.component';
-import { MemberDetailComponent } from './members/member-detail/member-detail.component';
-import { ToastrModule } from 'ngx-toastr';
+import { CoreModule } from './moduls/core.module';
+import { SharedModule } from './moduls/moduls/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,9 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
     HomeComponent,
     RegisterComponent,
     ListsComponent,
-    MessagesComponent,
-    MemberListComponent,
-    MemberDetailComponent
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -32,8 +28,8 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    BsDropdownModule.forRoot(),
-    ToastrModule.forRoot()
+    CoreModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
