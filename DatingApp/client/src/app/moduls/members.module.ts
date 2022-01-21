@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 export const routes: Routes = [ 
   { path: '', component: MemberListComponent, pathMatch: 'full' },
-  { path: ':id', component: MemberDetailComponent },
+  { path: ':id', component: MemberDetailComponent }
 ]
 
 
@@ -20,6 +20,11 @@ export const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes)
   ],
+  exports :[
+    RouterModule,
+    MemberListComponent,
+    MemberDetailComponent
+  ]
 
 })
 export class MembersModule { }

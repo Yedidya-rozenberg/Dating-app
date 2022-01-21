@@ -11,7 +11,6 @@ import { RegisterComponent } from './register/register.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { CoreModule } from './moduls/core.module';
-import { SharedModule } from './moduls/moduls/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,8 +27,7 @@ import { SharedModule } from './moduls/moduls/shared/shared.module';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    CoreModule,
-    SharedModule
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

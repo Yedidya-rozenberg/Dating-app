@@ -1,5 +1,3 @@
-import { MemberDetailComponent } from './members/member-detail/member-detail.component';
-import { MemberListComponent } from './members/member-list/member-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -14,33 +12,17 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'lists',
-    component: ListsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'messages',// localhost:4200/messages
-    component: MessagesComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: '',
     canActivate:[AuthGuard],
     runGuardsAndResolvers:'always',
     children:[
-
-      { path: 'members',
-       loadChildren: () => import('./moduls/members.module').then(m => m.MembersModule)
-       },
-     { path: '',
-       component: MemberListComponent,
-       pathMatch: 'full'},
-      {path: 'members/:id',// localhost:4200/members/4
-    component: MemberDetailComponent}
+      { path: 'members',  loadChildren: () => import('./moduls/members.module').then(m => m.MembersModule) },
+      { path: 'lists',component: ListsComponent},
+      { path: 'messages', component: MessagesComponent}
     ]
   },
   {
-    path: '**', // localhost:4200/non-existing-route/asdasd/asdasd/
+    path: '**',
     pathMatch: 'full',
     component: HomeComponent
   }
