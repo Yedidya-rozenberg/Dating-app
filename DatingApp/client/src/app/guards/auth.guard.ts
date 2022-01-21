@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     private accountService:AccountService,
     private toaster: ToastrService
   ) { }
-  canActive(): Observable<boolean>{
+  canActivate(): Observable<boolean>{
     return this.accountService.currentUser$.pipe(
       map(user=>{
         if(user) return true;
@@ -21,6 +21,6 @@ export class AuthGuard implements CanActivate {
         return false;
       })
     )
-
   }
+
 }
