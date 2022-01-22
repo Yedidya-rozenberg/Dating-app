@@ -1,3 +1,4 @@
+using System.Net;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,39 +12,54 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-  
-    public class buggyConrtoller : BaseApiController
+
+    public class BuggyController: BaseApiController
     {
         private readonly DataContext _context;
 
-        public buggyConrtoller(DataContext context)
+        public BuggyController(DataContext context)
         {
-            this._context = context;
+            _context = context;
         }
+
+        //  401 unauthorized
         [Authorize]
-        [HttpGet("auth")]
-        public ActionResult<string> getSecret(){
-            return "Secret string";
+        [HttpGet("auth")]// api/buggy/auth
+        public ActionResult<string> GetSecret()
+        {
+            return "Secret String";
         }
-        [HttpGet("not-found")]
-        public ActionResult<AppUser> getNotFound(){
+
+
+        // 404 not found
+        [HttpGet("not-found")] // api/buggy/not-found
+        public ActionResult<AppUser> GetNotFound()
+        {
             var thing = _context.AppUsers.Find(-1);
             if (thing == null)
             {
                 return NotFound();
-            } 
-            return Ok();
+            }
+
+            return Ok(); //🤣
         }
-                [HttpGet("server-error")]
-        public ActionResult<string> getServerError(){
-            var thing = _context.AppUsers.Find(-1);  
-            var thingToString =  thing.ToString();//nullReferenceExeption
-          return thingToString;
+
+
+        // 500 server error
+        [HttpGet("server-error")]//api/buggy/server-error
+        public ActionResult<string> GetServerError()
+        {
+             var thing = _context.AppUsers.Find(-1);
+             var thingToString = thing.ToString(); //NullReferenceExaption
+             return thingToString; // 🤣
         }
-[HttpGet("bad-request")]
-        public ActionResult<string> getBedREquest(){
-        return BadRequest("Servr error");
+
+
+        [HttpGet("bad-request")]//api/buggy/bad-request
+        public ActionResult<string> GetBadRequest() {
+            return BadRequest("this was not a good request");
         }
+
 
     }
 }
