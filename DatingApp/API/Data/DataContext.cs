@@ -11,7 +11,7 @@ namespace API.Data
         {
         }
  
-        public virtual DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
     }
 }

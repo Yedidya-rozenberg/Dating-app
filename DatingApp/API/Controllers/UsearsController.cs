@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+   [Authorize]
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _dataContext;
 
@@ -23,10 +23,9 @@ public UsersController(DataContext context)
 }         
 
 [HttpGet]
-[AllowAnonymous]
 public async Task< ActionResult<IEnumerable<string>>>GetUsers()
 {
-    var users = await _dataContext.AppUsers.ToListAsync();
+    var users = await _dataContext.Users.ToListAsync();
     var userNames = new List<string>();
         foreach (var user in users)
         {
@@ -36,12 +35,11 @@ public async Task< ActionResult<IEnumerable<string>>>GetUsers()
     return userNames;
 }
 
-[Authorize]
 [HttpGet("{id}")]
-public async Task<ActionResult<string>>GetUserByID(int ID)
+public async Task<ActionResult<AppUser>>GetUserByID(int ID)
 {
-var user = await _dataContext.AppUsers.FindAsync(ID);
-return user.UserName;
+var user = await _dataContext.Users.FindAsync(ID);
+return user;
 }
 
 

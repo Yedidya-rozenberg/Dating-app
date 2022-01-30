@@ -35,7 +35,7 @@ namespace API.Controllers
         [HttpGet("not-found")] // api/buggy/not-found
         public ActionResult<AppUser> GetNotFound()
         {
-            var thing = _context.AppUsers.Find(-1);
+            var thing = _context.Users.Find(-1);
             if (thing == null)
             {
                 return NotFound();
@@ -49,7 +49,7 @@ namespace API.Controllers
         [HttpGet("server-error")]//api/buggy/server-error
         public ActionResult<string> GetServerError()
         {
-             var thing = _context.AppUsers.Find(-1);
+             var thing = _context.Users.Find(-1);
              var thingToString = thing.ToString(); //NullReferenceExaption
              return thingToString; // 🤣
         }
