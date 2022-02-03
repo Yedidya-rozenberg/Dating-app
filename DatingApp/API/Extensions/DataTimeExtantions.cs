@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Extantions
+namespace API.Extensions
 {
-    public static class DataTimeExtantions
+    public static class DataTimeExtensions
     {
         public static int CalculateAge (this DateTime dob)
         {
