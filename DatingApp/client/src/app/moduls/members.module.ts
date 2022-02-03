@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MemberListComponent } from '../members/member-list/member-list.component';
 import { MemberDetailComponent } from '../members/member-detail/member-detail.component';
 import { Routes, RouterModule } from '@angular/router';
+import { MemberCardComponent } from '../members/member-card/member-card.component';
 
 export const routes: Routes = [ 
   { path: '', component: MemberListComponent, pathMatch: 'full' },
-  { path: ':id', component: MemberDetailComponent }
+  { path: ':username', component: MemberDetailComponent }
 ]
 
 
@@ -14,7 +15,9 @@ export const routes: Routes = [
 @NgModule({
   declarations: [
     MemberListComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    MemberCardComponent
+
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ export const routes: Routes = [
   exports :[
     RouterModule,
     MemberListComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    MemberCardComponent
   ]
 
 })
