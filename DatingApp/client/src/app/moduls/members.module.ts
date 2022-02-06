@@ -4,6 +4,7 @@ import { MemberListComponent } from '../members/member-list/member-list.componen
 import { MemberDetailComponent } from '../members/member-detail/member-detail.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MemberCardComponent } from '../members/member-card/member-card.component';
+import { ShardModule } from './shard.module';
 
 export const routes: Routes = [ 
   { path: '', component: MemberListComponent, pathMatch: 'full' },
@@ -20,6 +21,7 @@ export const routes: Routes = [
 
   ],
   imports: [
+    ShardModule,
     CommonModule,
     RouterModule.forChild(routes)
   ],

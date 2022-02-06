@@ -16,6 +16,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { NotFoundComponent } from './Errors/not-found/not-found.component';
 import { ServerErrorComponent } from './Errors/server-error/server-error.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    CoreModule
+    CoreModule,
+    FontAwesomeModule
   ],
   providers: [
     {
