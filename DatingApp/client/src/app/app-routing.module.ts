@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { TestErrorComponent } from './Errors/test-error/test-error.component';
 import { NotFoundComponent } from './Errors/not-found/not-found.component';
 import { ServerErrorComponent } from './Errors/server-error/server-error.component';
+import { MemberEditComponent } from './member-edit/member-edit.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     runGuardsAndResolvers:'always',
     children:[
       { path: 'members',  loadChildren: () => import('./moduls/members.module').then(m => m.MembersModule) },
+      {path: 'member/edit', component: MemberEditComponent},
       { path: 'lists',component: ListsComponent},
       { path: 'messages', component: MessagesComponent}
     ]

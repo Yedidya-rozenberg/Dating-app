@@ -17,6 +17,8 @@ import { NotFoundComponent } from './Errors/not-found/not-found.component';
 import { ServerErrorComponent } from './Errors/server-error/server-error.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MemberEditComponent } from './member-edit/member-edit.component';
+import { ShardModule } from './moduls/shard.module';
 
 @NgModule({
   declarations: [
@@ -28,17 +30,19 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MessagesComponent,
     TestErrorComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    MemberEditComponent
     
   ],
   imports: [
+    ShardModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
     CoreModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   providers: [
     {
