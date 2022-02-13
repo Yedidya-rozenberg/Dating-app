@@ -1,4 +1,15 @@
-<!-- <div class="row" *ngIf="member">
+<div class="row" *ngIf="member">
+    <div class="col-4">
+      <h1>Your Profile</h1>
+    </div>
+    <div class="col-8">
+     <div class="alert alert-info">
+       <p>
+         <strong>Information</strong>
+         You have made changes. any unsaved changes will be lost
+       </p>
+     </div>
+    </div>
     <div class="col-4">
         <div class="card">
             <img class="card-img-top img-thumbnail" src="{{member.photoUrl || './assets/user.png'}}"
@@ -22,31 +33,37 @@
                 </div>
             </div>
             <div class="card-footer">
-                <div class="btn-group d-flex">
-                    <button class="btn btn-primary">Like</button>
-                    <button class="btn btn-success">Message</button>
-                </div>
+                <button class="btn btn-success btn-block">Save Changes</button>
             </div>
         </div>
     </div>
     <div class="col-8">
       <tabset class="member-tabset">
         <tab heading="About {{member.knownAs}}">
+          <form >
             <h4>Description:</h4>
-            <p>{{member.introduction}}</p>
-            <h4>Looking for</h4>
-            <p>{{member.lookingFor}}</p>
+            <textarea [(ngModel)]="member.introduction" name="introduction" class="form-control" rows="6"></textarea>
+  
+            <h4 class="mt-2">Looking for</h4>
+            <textarea [(ngModel)]="member.lookingFor" name="lookingFor" class="form-control" rows="6"></textarea>
+  
+            <h4 class="mt-2">Interests</h4>
+            <textarea [(ngModel)]="member.interests" name="interests" class="form-control" rows="6"></textarea>
+  
+            <h4 class="mt-2">Location Details</h4>
+            <div class="form-inline">
+              <label for="City">City:</label>
+              <input type="text" [(ngModel)]="member.city" name="city" class="form-control mx-2">
+              <label for="Country">Country:</label>
+              <input type="text" [(ngModel)]="member.country" name="country" class="form-control mx-2">
+            </div>
+          </form>
         </tab>
-        <tab heading="Interests">
-          <h4>Interests:</h4>
-          <p>{{member.interests}}</p>
-        </tab>
-        <tab heading="Photos">
-          <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
-        </tab>
-        <tab heading="Messages">
-          <p>messages will go here</p>
+  
+        <tab heading="Edit Photos">
+          Photo edit will go here
         </tab>
       </tabset>
     </div>
-</div> -->
+  </div>
+  

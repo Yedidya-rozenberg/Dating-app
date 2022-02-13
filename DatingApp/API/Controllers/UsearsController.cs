@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Collections;
 using System.Runtime.InteropServices.ComTypes;
 using System;
@@ -25,7 +26,19 @@ namespace API.Controllers
 {
              _userRepository = userRepository;
              _mapper = mapper;
-        }         
+        } 
+
+[HttpPut]
+public async Task<ActionResult> UpdateUser (MemberUpdateDto memberUpdateDto){
+    var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    var user = await _userRepository.GetUserByUserNameAsync(username);
+    _mapper.Map(memberUpdateDto, user);
+    _userRepository.Update(user);
+    if (await _userRepository.SaveAllAsync()){
+        return NoContent();
+    }
+            return BadRequest("Failed to update user");
+}      
 
 [HttpGet]
 public async Task< ActionResult<IEnumerable<MemberDto>>>GetUsers()

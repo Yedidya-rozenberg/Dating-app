@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +19,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberEditComponent } from './member-edit/member-edit.component';
 import { ShardModule } from './moduls/shard.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoudingInterceptor } from './interceptors/louding.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,10 @@ import { ShardModule } from './moduls/shard.module';
     BrowserAnimationsModule,
     CoreModule,
     FontAwesomeModule,
+    NgxSpinnerModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -53,6 +58,11 @@ import { ShardModule } from './moduls/shard.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoudingInterceptor,
       multi: true
     }
   ],

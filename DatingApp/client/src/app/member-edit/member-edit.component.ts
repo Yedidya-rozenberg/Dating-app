@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { MembersService } from 'src/app/services/members.service';
+import { AccountService } from './../services/account.service';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Member } from '../models/member';
 import { User } from '../models/user';
-import { AccountService } from '../services/account.service';
-import { MembersService } from '../services/members.service';
+import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-member-edit',
@@ -11,14 +13,43 @@ import { MembersService } from '../services/members.service';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
-  member!:Member;
+  member!: Member;
   user!:User;
-  constructor(private accountService: AccountService, private membersService:MembersService) { }
+  @ViewChild('editForm') editForm: NgForm
+
+@HostListener('window:beforeunload', ['$event'])
+unloadNotification($event:any){
+  if (this.editForm.dirty){
+    $event.return = true;
+  }
+}
+
+  constructor(
+    private accountService: AccountService,
+    private membersService: MembersService,
+    private toastr: ToastrService
+  ) {
+    this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
+      this.user = user as User;
+    });
+  }
 
   ngOnInit(): void {
+    this.loadMember();
   }
-  loadMember(){
-    this.accountService.currentUser$.pipe(take(1)).subscribe((user: User | null) => {if(user) this.user = user});
-    this.membersService.getMember(this.user.username).subscribe(member => this.member = member);
+
+  loadMember() {
+    this.membersService.getMember(this.user.username).subscribe(member => {
+      this.member = member;
+
+    });
   }
+  updateMember() {
+    console.log(this.member);
+    this.toastr.success("Profile updated successfully");
+
+    this.editForm.reset(this.member)
+
+  }
+
 }
