@@ -39,16 +39,16 @@ unloadNotification($event:any){
   }
 
   loadMember() {
-    this.membersService.getMember(this.user.username).subscribe(member => {
+    this.membersService.getMember(this.user.username).subscribe((member: Member) => {
       this.member = member;
 
     });
   }
   updateMember() {
-    console.log(this.member);
-    this.toastr.success("Profile updated successfully");
-
+    this.membersService.updateMember(this.member).subscribe(() => {
+      this.toastr.success("Profile updated successfully");
     this.editForm.reset(this.member)
+    })
 
   }
 

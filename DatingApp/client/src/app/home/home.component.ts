@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MembersService } from '../services/members.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ export class HomeComponent implements OnInit {
 registerMode = false;
 Users:any;
 
-constructor(private http:HttpClient) { }
+constructor(private http:HttpClient, private membersService:MembersService) { }
 
   ngOnInit(): void {
   }
@@ -18,8 +19,7 @@ constructor(private http:HttpClient) { }
     this.registerMode = !this.registerMode;
   }
   getUsers(){
-this.http.get('https://localhost:5001/users')
-.subscribe({next: (data)=> this.Users = data, error: (err)=> console.log(err)});
+this.membersService.getMembers().subscribe({next: (data)=> this.Users = data, error: (err)=> console.log(err)});
   }
   cancelRegisterMode($event: boolean){
     this.registerMode = $event;
