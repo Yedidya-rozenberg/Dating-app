@@ -21,6 +21,7 @@ import { MemberEditComponent } from './member-edit/member-edit.component';
 import { ShardModule } from './moduls/shard.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoudingInterceptor } from './interceptors/louding.interceptor';
+import { PhotoEditorComponent } from './member-edit/photo-editor/photo-editor.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LoudingInterceptor } from './interceptors/louding.interceptor';
     TestErrorComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    MemberEditComponent
+    MemberEditComponent,
+    PhotoEditorComponent
     
   ],
   imports: [
@@ -44,8 +46,6 @@ import { LoudingInterceptor } from './interceptors/louding.interceptor';
     FormsModule,
     BrowserAnimationsModule,
     CoreModule,
-    FontAwesomeModule,
-    NgxSpinnerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

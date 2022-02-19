@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using API.Interfaces;
 using AutoMapper;
 using API.DTOs;
+using Microsoft.AspNetCore.Http;
+using API.Extensions;
 
 namespace API.Controllers
 {
@@ -21,11 +23,13 @@ namespace API.Controllers
     {
         private readonly IUserRepository _userRepository ;
         private readonly IMapper _mapper;
+        private readonly IPhotoService _photoService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
 {
              _userRepository = userRepository;
              _mapper = mapper;
+             _photoService = photoService;
         } 
 
 [HttpPut]
@@ -56,7 +60,7 @@ public async Task< ActionResult<IEnumerable<MemberDto>>>GetUsers()
 // return user;
 // }
 
-[HttpGet("{userName}")]
+[HttpGet("{userName}", Name ="GetUser")]
 public async Task<ActionResult<MemberDto>>GetUserByUserName(string userName)
 {
 var member = await _userRepository.GetMemberAsync(userName);
@@ -65,7 +69,31 @@ var member = await _userRepository.GetMemberAsync(userName);
 return Ok(member);
 }
 
+[HttpPost("add-photo")]
+public async Task<ActionResult<PhotoDto>>addPhoto(IFormFile file)
+{
+     var username = User.GetUserName();
+    var user = await _userRepository.GetUserByUserNameAsync(username);
+    var result = await _photoService.UploadPhotoAsync(file);
+    if (result.Error != null)
+    {return BadRequest(result.Error.Message);}
 
+    var photo = new Photo {
+        Url = result.SecureUrl.AbsoluteUri,
+        PublicId = result.PublicId
+        };
+
+        photo.IsMain = user.Photos.Count==0;
+        _userRepository.Update(user);
+
+        if (await _userRepository.SaveAllAsync())
+        {
+        //return _mapper.Map<PhotoDto>(photo);
+        return CreatedAtRoute("GetUser", new {userName = user.UserName},  _mapper.Map<PhotoDto>(photo));
+        }
+
+        return BadRequest("problam adding photos");
 
     }
+ }
 }
