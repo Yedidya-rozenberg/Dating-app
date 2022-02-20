@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Security.Cryptography;
 using System.Net;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace API.Controllers
             return new UserDto 
             {
                 Username = user.UserName,
-                Token = _tokenService.CteateToken(user)
+                Token = _tokenService.CteateToken(user),
             };
         }
         [HttpPost("Login")]
@@ -57,7 +58,9 @@ namespace API.Controllers
             return new UserDto 
             {
                 Username = user.UserName,
-                Token = _tokenService.CteateToken(user)
+                Token = _tokenService.CteateToken(user),
+                PhotoUrl = user.Photos?.FirstOrDefault(p=>p.IsMain)?.Url
+
             };
         }
 

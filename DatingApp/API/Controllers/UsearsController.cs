@@ -95,5 +95,32 @@ public async Task<ActionResult<PhotoDto>>addPhoto(IFormFile file)
         return BadRequest("problam adding photos");
 
     }
- }
+ 
+//  [HttpPut("set-main-photo/{photoId}")]
+//     public async Task<ActionResult> SetMainPhoto(int photoId)
+//     {
+//         var username = User.GetUserName();
+//         var user = await _userRepository.GetUserByUserNameAsync(username);
+//         var photo 
+//     }
+     [HttpPut("delete-photo/{photoId}")]
+    public async Task<ActionResult> deletePhoto(int photoId)
+    {
+        var username = User.GetUserName();
+        var user = await _userRepository.GetUserByUserNameAsync(username);
+        var photo =  user.Photos.FirstOrDefault(p=>p.Id == photoId);
+        if (photo==null)
+        {return BadRequest("The photo not exist");}
+        if(photo.IsMain)
+        {return BadRequest("You can't delete main photo");}
+        if(photo.PublicId != null)
+        {var result =  await _photoService.DeletePhotoAsync(photo.PublicId);
+        if (result.Error != null) {return BadRequest("Same error occor");}
+        return Ok(result);
+        }
+        return BadRequest("The photo not in cloudinery");
+        
+
+    }
+}
 }

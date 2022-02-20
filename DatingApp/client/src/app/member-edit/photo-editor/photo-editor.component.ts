@@ -55,5 +55,16 @@ export class PhotoEditorComponent implements OnInit {
   fileOverBase(e: any){
     this.hasBaseDropZoneOver = e;
   }
+  SetMainPhoto(photoId: number){
+
+  }
+
+  deletePhoto(photoId:number){
+    
+  }
+
+    
+
+
 
 }
