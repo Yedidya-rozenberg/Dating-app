@@ -29,7 +29,7 @@
     </div>
   </form> -->
 
-  <form [formGroup]="RegisterForm" (ngSubmit)="register()" autocomplete="off">
+  <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
     <h2 class="text-center text-primary">Sign Up</h2>
     <br>
     <div class="form-group">
@@ -63,3 +63,9 @@
       <button class="btn btn-default mr-2" type="button" (click)="cancel()">Cancel</button>
     </div>
   </form>
+
+  <p>Form value: {{registerForm.value | json}}</p>
+
+<p>Form status: {{registerForm.status}}</p>
+<p>password status: {{registerForm.get('password')?.status}}</p>
+<p>confirmPassword status: {{registerForm.get('confirmPassword')?.status}}</p>
