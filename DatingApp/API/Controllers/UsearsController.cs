@@ -122,5 +122,31 @@ public async Task<ActionResult<PhotoDto>>addPhoto(IFormFile file)
         
 
     }
+    
+        [HttpPut("set-main-photo/{photoId}")]
+        public async Task<ActionResult> SetMainPhoto(int photoId)
+        {
+
+            var username = User.GetUsername();
+
+            var user = await _userRepository.GetUserByUserNameAsync(username);
+
+            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+            if (photo == null) return BadRequest("Photo not found");
+
+            if (photo.IsMain) return BadRequest("this is already the main photo");
+
+            var currentMain = user.Photos.FirstOrDefault(x => x.IsMain);
+
+            if (currentMain != null) currentMain.IsMain = false;
+            photo.IsMain = true;
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest(" Failed to set photo to main");
+        }
+
+
 }
 }
