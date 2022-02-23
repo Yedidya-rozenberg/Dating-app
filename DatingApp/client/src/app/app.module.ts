@@ -22,6 +22,7 @@ import { ShardModule } from './moduls/shard.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoudingInterceptor } from './interceptors/louding.interceptor';
 import { PhotoEditorComponent } from './member-edit/photo-editor/photo-editor.component';
+import { TextInputComponent } from './forms/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +36,8 @@ import { PhotoEditorComponent } from './member-edit/photo-editor/photo-editor.co
     NotFoundComponent,
     ServerErrorComponent,
     MemberEditComponent,
-    PhotoEditorComponent
-    
+    PhotoEditorComponent,
+    TextInputComponent
   ],
   imports: [
     ShardModule,

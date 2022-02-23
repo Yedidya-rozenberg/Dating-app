@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
 matchValue(matchTo:string):ValidatorFn{
   return(control:AbstractControl):ValidationErrors |null => {
       const ControlValue = control.value;
-      const ControlToMatch = (control?.parent as FormGroup)?.controls[matchTo];//.parent?.controls [matchTo];
+      const ControlToMatch = (control?.parent as FormGroup)?.controls[matchTo];
       const ControlToMatchValue = ControlToMatch?.value;
       return (ControlValue === ControlToMatchValue) ? null : {IsMatching: true}
     

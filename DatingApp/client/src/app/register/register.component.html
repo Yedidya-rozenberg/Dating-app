@@ -31,14 +31,16 @@
 
   <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
     <h2 class="text-center text-primary">Sign Up</h2>
-    <br>
+    <!-- <br>
     <div class="form-group">
       <input
+      [class.is-invalid] = 'registerForm.get("password")?.errors && registerForm.get("password")?.touched'
       type="text"
       class="form-control"
       formControlName="username"
       placeholder="Username"
       >
+      <div class="invalid-feedbeck">Please enter a user name'</div>
     </div>  
     <div class="form-group">
       <input
@@ -48,6 +50,9 @@
       formControlName="password"
       placeholder="Password"
       >
+      <div *ngIf="registerForm.get('password')?.hasError('required')" class="invalid-feedbeck">Please enter a password.'</div>  
+      <div *ngIf="registerForm.get('password')?.hasError('minLength')" class="invalid-feedbeck">Min 4 characters'</div>   
+      <div *ngIf="registerForm.get('password')?.hasError('maxLength')" class="invalid-feedbeck">Max 8 characters.'</div>   
     </div>
     <div class="form-group">
       <input
@@ -57,7 +62,14 @@
       formControlName="confirmPassword"
       placeholder="Confirm Password"
       >
-    </div>
+      <div *ngIf="registerForm.get('password')?.hasError('required')" class="invalid-feedbeck">Please confirm the password.</div>  
+      <div *ngIf="registerForm.get('password')?.hasError('IsMatching')" class="invalid-feedbeck">The password not match.</div>  
+
+    </div> -->
+    <app-text-input formControlName="username" label="Username"></app-text-input>
+    <app-text-input formControlName="password" label="Password" type="password"></app-text-input>
+    <app-text-input formControlName="confirmPassword" label="Confirm Password"  type="password"></app-text-input>
+  
     <div class="form-group text-center">
       <button class="btn btn-success mr-2" type="submit">Register</button>
       <button class="btn btn-default mr-2" type="button" (click)="cancel()">Cancel</button>
