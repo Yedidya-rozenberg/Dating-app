@@ -38,10 +38,12 @@ members:Member[] = [];
     )
   }
 
-  setMainPhoto(photoId:number){
-    // return this.http.put({{this.baseUrl}}set-main-photo/{photoId})
+  setMainPhoto(photoId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}users/set-main-photo/${photoId}`, {});
   }
-  deletePhoto(photoId:number){
-    
+
+  deletePhoto(photoId:number) {
+    return this.http.delete(`${this.baseUrl}users/delete-photo/${photoId}`);
   }
+
 }
