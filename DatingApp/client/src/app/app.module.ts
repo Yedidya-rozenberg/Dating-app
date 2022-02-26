@@ -16,13 +16,13 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { NotFoundComponent } from './Errors/not-found/not-found.component';
 import { ServerErrorComponent } from './Errors/server-error/server-error.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberEditComponent } from './member-edit/member-edit.component';
 import { ShardModule } from './moduls/shard.module';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoudingInterceptor } from './interceptors/louding.interceptor';
 import { PhotoEditorComponent } from './member-edit/photo-editor/photo-editor.component';
 import { TextInputComponent } from './forms/text-input/text-input.component';
+import { DateInputComponent } from './forms/date-input/date-input.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { TextInputComponent } from './forms/text-input/text-input.component';
     ServerErrorComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    TextInputComponent
+    TextInputComponent,
+    DateInputComponent
   ],
   imports: [
     ShardModule,
@@ -48,6 +49,7 @@ import { TextInputComponent } from './forms/text-input/text-input.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     CoreModule,
+    BsDatepickerModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

@@ -7,6 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 
@@ -23,7 +24,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       positionClass: 'toast-bottom-right'
     }),
     NgxSpinnerModule,
-    FileUploadModule
+    FileUploadModule,
+    BsDatepickerModule.forRoot(),
+
   ],
   exports : [
     TabsModule,
@@ -32,7 +35,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ToastrModule,
     NgxSpinnerModule,
     FileUploadModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BsDatepickerModule
   ]
 })
 export class ShardModule { }

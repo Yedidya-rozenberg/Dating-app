@@ -72,7 +72,7 @@ return Ok(member);
 [HttpPost("add-photo")]
 public async Task<ActionResult<PhotoDto>>addPhoto(IFormFile file)
 {
-     var username = User.GetUserName();
+     var username = User.GetUsername();
     var user = await _userRepository.GetUserByUserNameAsync(username);
     var result = await _photoService.UploadPhotoAsync(file);
     if (result.Error != null)
@@ -106,7 +106,7 @@ public async Task<ActionResult<PhotoDto>>addPhoto(IFormFile file)
      [HttpPut("delete-photo/{photoId}")]
     public async Task<ActionResult> deletePhoto(int photoId)
     {
-        var username = User.GetUserName();
+        var username = User.GetUsername();
         var user = await _userRepository.GetUserByUserNameAsync(username);
         var photo =  user.Photos.FirstOrDefault(p=>p.Id == photoId);
         if (photo==null)
