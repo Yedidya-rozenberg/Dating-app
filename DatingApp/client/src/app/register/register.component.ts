@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -14,27 +16,32 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter<boolean>();
   registerForm:FormGroup;
   maxDate: Date;
-
+  validationErrors: string[] = [];
 
   constructor(
     private accountService: AccountService,
     private toastr: ToastrService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private router:Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
     this.maxDate = new Date();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
+
   }
   register(){
-    // this.accountService.register(this.model).subscribe(
-    //   (data) => {
-    //     console.log(data);
-    //     this.cancel();
-    //   },
-    //   error => console.log(error)
-    // )
-    console.log(this.registerForm.value);
+    this.accountService.register(this.registerForm.value).subscribe(
+      (data) => {
+      this.router.navigate(['/members'])      
+      this.cancel();
+      },
+      error =>{
+        console.log(error);
+        this.validationErrors = error;
+      } 
+    )
+    // console.log(this.registerForm.value);
   }
   cancel(){
     this.cancelRegister.emit(false);
