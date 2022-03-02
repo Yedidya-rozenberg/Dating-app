@@ -15,6 +15,7 @@ using AutoMapper;
 using API.DTOs;
 using Microsoft.AspNetCore.Http;
 using API.Extensions;
+using API.helpers;
 
 namespace API.Controllers
 {
@@ -45,12 +46,22 @@ public async Task<ActionResult> UpdateUser (MemberUpdateDto memberUpdateDto){
 }      
 
 [HttpGet]
-public async Task< ActionResult<IEnumerable<MemberDto>>>GetUsers()
+public async Task< ActionResult<PageList<MemberDto>>>GetUsers([FromQuery]UserParams userParams)
 {
-    var UserToTerutn = await _userRepository.GetMembersAsync();
+    var users = await _userRepository.GetMembersAsync(userParams);
+    Response.AddPaginationHeader(
+        users.CurrentPage,
+        users.PageSize,
+        users.TotalCount,
+        users.TotalPages
+    );
+    return Ok(users);
+
     // var users = await _userRepository.GetUsersAsync();
     // var UserToTerutn = _mapper.Map<IEnumerable<MemberDto>>(users);
-    return Ok(UserToTerutn);     
+
+    //     var UserToTerutn = await _userRepository.GetMembersAsync();
+    // return Ok(UserToTerutn);     
 }
 
 // [HttpGet("{id}")]
