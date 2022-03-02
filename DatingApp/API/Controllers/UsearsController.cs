@@ -48,6 +48,12 @@ public async Task<ActionResult> UpdateUser (MemberUpdateDto memberUpdateDto){
 [HttpGet]
 public async Task< ActionResult<PageList<MemberDto>>>GetUsers([FromQuery]UserParams userParams)
 {
+    if(string.IsNullOrEmpty(userParams.Gender))
+    {
+        userParams.Gender = userParams.Gender=="male"? "female":"male";
+    }
+    userParams.CorrentUser= User.GetUsername();
+    
     var users = await _userRepository.GetMembersAsync(userParams);
     Response.AddPaginationHeader(
         users.CurrentPage,

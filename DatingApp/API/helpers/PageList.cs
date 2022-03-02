@@ -25,9 +25,9 @@ namespace API.helpers
         public PageList(int currentPage, int totalPages, int pageSize, int totalCount) 
         {
             this.CurrentPage = currentPage;
-                this.TotalPages = totalPages;
-                this.PageSize = pageSize;
-                this.TotalCount = totalCount;
+            this.TotalPages = totalPages;
+            this.PageSize = pageSize;
+            this.TotalCount = totalCount;
                
         }
                 public int CurrentPage { get; set; }

@@ -18,9 +18,7 @@ constructor(private http:HttpClient, private membersService:MembersService) { }
   registerToggle(){
     this.registerMode = !this.registerMode;
   }
-  getUsers(){
-this.membersService.getMembers().subscribe({next: (data)=> this.Users = data, error: (err)=> console.log(err)});
-  }
+
   cancelRegisterMode($event: boolean){
     this.registerMode = $event;
   }

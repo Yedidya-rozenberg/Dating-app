@@ -54,12 +54,24 @@ namespace API.Data
 
         public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-             var query  =  _context.Users
-            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            .AsNoTracking();
-            //add peremeters to query, do it and return.
-            return await PageList<MemberDto>.CreateAsync(query,userParams.PageNumber, userParams.PageSize);
-               
+            //  var query  =  _context.Users
+            // .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+            // .AsNoTracking();
+
+             var query  =  _context.Users.AsQueryable();
+             query = query.Where(x=>x.UserName != userParams.CorrentUser);
+             query = query.Where(x=>x.Gender == userParams.Gender);
+
+             //filter age
+             var minDob = DateTime.Today.AddYears(-userParams.MaxAge-1);
+             var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
+             query = query.Where(x=>x.DateOfBirth>=minDob && x.DateOfBirth<=maxDob);
+   
+            return await PageList<MemberDto>.CreateAsync(
+                query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
+                userParams.PageNumber, userParams.PageSize);
+            
         }
 
         public async Task<MemberDto> GetMemberAsync(string userName)
