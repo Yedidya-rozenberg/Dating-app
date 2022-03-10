@@ -12,7 +12,7 @@ namespace API.helpers
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
                 var resultContext = await next();
-                if(resultContext.HttpContext.User.Identity.IsAuthenticated) return;
+                if(!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
                 
                 var userId= resultContext.HttpContext.User.GetUserId();
 

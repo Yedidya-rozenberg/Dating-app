@@ -10,6 +10,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { TimeagoModule } from 'ngx-timeago';
 
 
 
@@ -30,7 +32,8 @@ import { FormsModule } from '@angular/forms';
     FileUploadModule,
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
-
+    ButtonsModule.forRoot(),
+    TimeagoModule.forRoot()
   ],
   exports : [
     TabsModule,
@@ -42,7 +45,9 @@ import { FormsModule } from '@angular/forms';
     FontAwesomeModule,
     BsDatepickerModule,
     FormsModule,
-    PaginationModule
+    PaginationModule,
+    ButtonsModule,
+    TimeagoModule
   ]
 })
 export class ShardModule { }
