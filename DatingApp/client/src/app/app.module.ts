@@ -23,6 +23,8 @@ import { PhotoEditorComponent } from './member-edit/photo-editor/photo-editor.co
 import { TextInputComponent } from './forms/text-input/text-input.component';
 import { DateInputComponent } from './forms/date-input/date-input.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     CoreModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    ButtonsModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
