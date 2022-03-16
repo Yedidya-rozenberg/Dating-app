@@ -21,14 +21,14 @@ namespace API.Data
             return await _context.userLikes.FindAsync(SourceUserId,LikedUserId);
         }
 
-        public async Task<AppUser> GetUserLikes(int userId)
+        public async Task<AppUser> GetUserWithLikes (int userId)
         {
             return await _context.Users
             .Include(u=>u.LikedUsers)
             .FirstOrDefaultAsync(u=>u.Id==userId);
         }
 
-        public async Task<IEnumerable<LikeDto>> GetUserWithLikes(string predicate ,int userId)
+        public async Task<IEnumerable<LikeDto>> GetUserLikes (string predicate ,int userId)
         {
             IQueryable<AppUser> users;
             var likes = _context.userLikes.AsQueryable();

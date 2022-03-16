@@ -24,7 +24,7 @@ namespace API.Controllers
         {
             var SourceUserId = User.GetUserId();
             var LikedUser = await _userRepository.GetUserByUserNameAsync(username);
-            var SourceUser = await _userRepository.GetUserByIdAsync(SourceUserId);
+            var SourceUser = await _likesRepository.GetUserWithLikes(SourceUserId);
 
             if (LikedUser == null) return NotFound();
             if (SourceUser.UserName==username) return BadRequest("You alredy like yourself.");
@@ -43,7 +43,7 @@ namespace API.Controllers
 
         public async Task<ActionResult<IEnumerable<LikeDto>>> GetLikeUsers (string predicate)
         {
-            var users = await _likesRepository.GetUserWithLikes(predicate, User.GetUserId());
+            var users = await _likesRepository.GetUserLikes(predicate, User.GetUserId());
             if (users != null) return Ok(users);
             return BadRequest("fail to  get likes.");
         }
