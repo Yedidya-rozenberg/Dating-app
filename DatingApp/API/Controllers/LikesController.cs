@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.helpers;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,11 +42,12 @@ namespace API.Controllers
             return BadRequest("Faild to like user.");
         }
 
-        public async Task<ActionResult<IEnumerable<LikeDto>>> GetLikeUsers (string predicate)
+        public async Task<ActionResult<IEnumerable<LikeDto>>> GetLikeUsers ([FromQuery]LikesParams likesParams)
         {
-            var users = await _likesRepository.GetUserLikes(predicate, User.GetUserId());
-            if (users != null) return Ok(users);
-            return BadRequest("fail to  get likes.");
+            likesParams.UserId = User.GetUserId();
+            var users = await _likesRepository.GetUserLikes(likesParams);
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+            return Ok(users);
         }
     }
 }
