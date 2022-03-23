@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MemberListComponent } from '../members/member-list/member-list.component';
 import { MemberDetailComponent } from '../members/member-detail/member-detail.component';
 import { Routes, RouterModule } from '@angular/router';
-import { MemberCardComponent } from '../members/member-card/member-card.component';
 import { ShardModule } from './shard.module';
 
 export const routes: Routes = [ 
@@ -16,8 +15,7 @@ export const routes: Routes = [
 @NgModule({
   declarations: [
     MemberListComponent,
-    MemberDetailComponent,
-    MemberCardComponent
+    MemberDetailComponent
 
   ],
   imports: [
@@ -28,8 +26,7 @@ export const routes: Routes = [
   exports :[
     RouterModule,
     MemberListComponent,
-    MemberDetailComponent,
-    MemberCardComponent
+    MemberDetailComponent
   ]
 
 })

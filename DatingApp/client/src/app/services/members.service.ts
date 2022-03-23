@@ -59,6 +59,15 @@ if (response){return of (response);}
       );
   }
 
+  addLike(username:string){
+    const url = `${this.baseUrl}likes/${username}`;
+    return this.http.post(url, {});
+  }
+
+  getLikes(predicate:string){
+    return this.http.get<Partial<Member>[]>(`${this.baseUrl}likes?predicate=${predicate}`)
+  }
+
   getMember(userName : string): Observable<Member> {
     // const member = this.members.find(x=>x.userName === userName);
     // if (member)

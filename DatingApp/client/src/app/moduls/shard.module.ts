@@ -12,6 +12,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago';
+import { MemberCardComponent } from '../members/member-card/member-card.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -19,9 +21,12 @@ import { TimeagoModule } from 'ngx-timeago';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    MemberCardComponent
+  ],
   imports: [
     CommonModule,
+    RouterModule,
     TabsModule.forRoot(),
     NgxGalleryModule,
     BsDropdownModule.forRoot(),
@@ -47,7 +52,8 @@ import { TimeagoModule } from 'ngx-timeago';
     FormsModule,
     PaginationModule,
     ButtonsModule,
-    TimeagoModule
+    TimeagoModule,
+    MemberCardComponent
   ]
 })
 export class ShardModule { }

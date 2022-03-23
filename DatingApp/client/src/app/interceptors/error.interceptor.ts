@@ -32,8 +32,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
               }
               throw modelStateErrors.flat();
-              } else {
-                this.toaster.error((err.statusText=== 'OK'? "Bed request": err.statusText) +  `<br/> ${err.error}`, err.satus)
+              } else if(typeof(err)==='object') {
+                this.toaster.error((err.statusText=== 'OK'? "Bed request": err.statusText) , err.satus)
+                throw err;
+              }
+              else {
+                this.toaster.error(err.error, err.satus);
+                throw err;
               }
           break;
           case 401:
