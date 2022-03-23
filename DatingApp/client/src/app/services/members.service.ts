@@ -17,6 +17,7 @@ export class MembersService {
  
 baseUrl = environment.apiUrl;
 memberCache = new Map<string, PaginatedResult<Member[]>>();
+likeCache = new Map<string, PaginatedResult<Partial<Member>[]>>();
 members:Member[] = [];
   user: User;
   userParams: UserParams;
@@ -33,7 +34,7 @@ const cacheKay = Object.values(userParams).join('-');
 const response = this.memberCache.get(cacheKay);
 if (response){return of (response);}
 
-  let params = this.getPaginetionParams(userParams);
+  let params = this.getPaginetionParams(userParams.pageNumber, userParams.pageSize);
   params = params.append('minAge',userParams.minAge.toString());
   params =  params.append('maxAge',userParams.max.toString());
   params =  params.append('gender',userParams.gender.toString());
@@ -64,8 +65,22 @@ if (response){return of (response);}
     return this.http.post(url, {});
   }
 
-  getLikes(predicate:string){
-    return this.http.get<Partial<Member>[]>(`${this.baseUrl}likes?predicate=${predicate}`)
+  getLikes(predicate:string, pageNumber:number, pageSize:number, chackbox?:boolean){
+
+    const cacheKay = predicate + "-" + pageNumber + "-" + pageSize;
+    if(chackbox)
+      {
+        const response = this.likeCache.get(cacheKay);
+        if (response){return of (response);}
+      }
+    let params = this.getPaginetionParams(pageNumber, pageSize);
+
+    params = params.append(`predicate`, predicate);
+
+    return this.getPaginatedResult<Partial<Member>[]>(`${this.baseUrl}likes` ,params)
+    .pipe(tap(res=> this.likeCache.set(cacheKay, res)));
+
+    //return this.http.get<Partial<Member>[]>(`${this.baseUrl}likes?predicate=${predicate}`)
   }
 
   getMember(userName : string): Observable<Member> {
@@ -109,7 +124,7 @@ if (response){return of (response);}
     this.userParams = userParams;
   }
 
-private getPaginetionParams ({pageNumber, pageSize}:UserParams){
+private getPaginetionParams (pageNumber:number, pageSize:number){
   let params = new HttpParams();
   params = params.append('pageNumber',pageNumber.toString());
   params = params.append('pageSize',pageSize.toString());
