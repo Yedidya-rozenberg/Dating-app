@@ -42,6 +42,7 @@ namespace API.Controllers
             return BadRequest("Faild to like user.");
         }
 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<LikeDto>>> GetLikeUsers ([FromQuery]LikesParams likesParams)
         {
             likesParams.UserId = User.GetUserId();
