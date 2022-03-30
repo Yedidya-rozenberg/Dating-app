@@ -25,6 +25,7 @@ import { DateInputComponent } from './forms/date-input/date-input.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     MemberEditComponent,
     PhotoEditorComponent,
     TextInputComponent,
-    DateInputComponent
+    DateInputComponent,
   ],
   imports: [
     ShardModule,

@@ -4,6 +4,7 @@ import { MemberListComponent } from '../members/member-list/member-list.componen
 import { MemberDetailComponent } from '../members/member-detail/member-detail.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ShardModule } from './shard.module';
+import { MemberMessagesComponent } from '../members/member-messages/member-messages.component';
 
 export const routes: Routes = [ 
   { path: '', component: MemberListComponent, pathMatch: 'full' },
@@ -15,8 +16,8 @@ export const routes: Routes = [
 @NgModule({
   declarations: [
     MemberListComponent,
-    MemberDetailComponent
-
+    MemberDetailComponent,
+    MemberMessagesComponent
   ],
   imports: [
     ShardModule,

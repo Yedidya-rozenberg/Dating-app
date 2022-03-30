@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
@@ -61,5 +62,16 @@ namespace API.Controllers
                 Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize, messages.TotalCount, messages.TotalPages);
                 return Ok(messages);
             }
+
+            [HttpGet("thread/{username}")]
+            public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageThread (string username)
+            {
+                var currentUsername = User.GetUsername();
+                var messagesThread = await _massegeRepozitory.GetMassegeThread(currentUsername, username);
+                return Ok(messagesThread);
+            }
+                
+            
+    
     }
 }

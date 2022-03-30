@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using API.helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
@@ -51,14 +53,49 @@ namespace API.Data
             return await PageList<MessageDto>.CreateAsync(messages, messageParams.PageNumber,messageParams.PageSize);
         }
 
-                public Task<IEnumerable<MessageDto>> GetMassegeThread(int currentUserId, int recipientId)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<bool> SaveAllAsync()
         {
             return (await _Context.SaveChangesAsync()>0);
         }
+
+       public async Task<IEnumerable<MessageDto>> GetMassegeThread(string currentUsername, string recipientname)
+        {
+            var messages = await _Context.Messages
+            .Include(u=>u.Sender).ThenInclude(p=>p.Photos)
+            .Include(u=>u.Recipient).ThenInclude(p=>p.Photos)
+            .Where(m=> 
+            m.Recipient.UserName == currentUsername && m.Sender.UserName == recipientname ||
+            m.Sender.UserName == currentUsername && m.Recipient.UserName == recipientname )
+            .OrderBy(m=>m.MassegeSent)
+            .ToListAsync();
+
+            // var unreadMessages = messeges.Where(m=>m.DataRead == null 
+            // && m.Recipient.UserName == currentUsername).ToList();
+             if(await updateUnread(messages, currentUsername) == -1){
+                throw new Exception("could not save to DB all the data");
+            }
+
+
+            return _mapper.Map<IEnumerable<MessageDto>>(messages);
+
+
+        }
+        private async Task<int>  updateUnread(List<Message> messages, string currentUsername)
+        {
+             var unreadMessages =  messages.Where(m=>m.DataRead == null 
+            && m.Recipient.UserName == currentUsername).ToList();
+
+            if(unreadMessages.Any())
+            {
+                foreach (var m in unreadMessages) m.DataRead = DateTime.Now;
+                var rtn = await _Context.SaveChangesAsync();
+                if (rtn < unreadMessages.Count)
+                {
+                    return -1;
+                }
+            }
+            return 0;
+
+        } 
     }
 }
