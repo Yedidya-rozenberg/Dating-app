@@ -54,6 +54,10 @@ namespace API.Data
 
         public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
+           if (userParams.Gender == null)
+            {
+                return new PageList<MemberDto>(new List<MemberDto>{}, 0, 0, 0);
+            }
             //  var query  =  _context.Users
             // .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             // .AsNoTracking();

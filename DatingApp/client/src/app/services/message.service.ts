@@ -21,4 +21,8 @@ baseUrl = environment.apiUrl;
   GetMessagesThread(username:string){
     return this.http.get<Message[]>(this.baseUrl+`messages/thread/${username}`)
   }
+  sandMessage(username:string, content:string){
+    const creatMessage = {recipientUsername:username, content};
+    return this.http.post(this.baseUrl+"messages", creatMessage);
+  }
 }

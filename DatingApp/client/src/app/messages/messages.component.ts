@@ -15,6 +15,7 @@ export class MessagesComponent implements OnInit {
   container: string = 'Inbox';
   pageNumber: number = 1;
   pageSize: number = 5;
+  loadind:boolean = false;
 
   constructor(private messageService:MessageService) { }
 
@@ -23,19 +24,21 @@ export class MessagesComponent implements OnInit {
   }
   leadMessages(
   ){
+    this.loadind = true;
     this.messageService.GetMessages(this.pageNumber, this.pageSize, this.container).subscribe(
       x=> {
       this.messages = x.result;
       this.pagination = x.pagination;
+    this.loadind = false;
       })
   }
 
   pageChanged(event:any):void{
-    if(this.pageNumber !== event.page)
-    {
+//    if(this.pageNumber !== event.page)
+//    {
       this.pageNumber = event.page;
       this.leadMessages();
-    }
+   // }
   }
 
 }

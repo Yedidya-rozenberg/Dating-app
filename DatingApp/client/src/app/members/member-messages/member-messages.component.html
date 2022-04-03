@@ -33,7 +33,7 @@
       <ng-template #noMessages>No messages Yet... say hi bu using the message box bellow</ng-template>
     </div>
     <div class="card-footer">
-      <form action="">
+      <form #messageForm = "ngForm" (ngSubmit)="sendMessage">
         <div class="input-group">
           <input type="text" class="form-control input-sm" placeholder="Send a private message">
           <div class="input-group-append">
