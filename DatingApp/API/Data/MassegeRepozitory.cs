@@ -47,6 +47,8 @@ namespace API.Data
              "Outbox" => query.Where(m=>m.Sender.UserName==messageParams.UserName),
              _ => query.Where(m=>m.Recipient.UserName==messageParams.UserName && m.DataRead == null)
             };
+            query = query.Where(m=>( m.Recipient.UserName == messageParams.UserName && m.RecipientDeleted == false) ||
+                         (m.Sender.UserName == messageParams.UserName && m.SenderDeleted == false));
 
             var messages = query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider);
 
@@ -66,6 +68,8 @@ namespace API.Data
             .Where(m=> 
             m.Recipient.UserName == currentUsername && m.Sender.UserName == recipientname ||
             m.Sender.UserName == currentUsername && m.Recipient.UserName == recipientname )
+            .Where(m=>( m.Recipient.UserName == currentUsername && m.RecipientDeleted == false) ||
+                         (m.Sender.UserName == currentUsername && m.SenderDeleted == false))
             .OrderBy(m=>m.MassegeSent)
             .ToListAsync();
 

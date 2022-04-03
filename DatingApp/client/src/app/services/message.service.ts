@@ -25,4 +25,7 @@ baseUrl = environment.apiUrl;
     const creatMessage = {recipientUsername:username, content};
     return this.http.post(this.baseUrl+"messages", creatMessage);
   }
+  deleteMessage(id:number){
+   return this.http.delete(this.baseUrl+`messages/${id}`)
+  }
 }
