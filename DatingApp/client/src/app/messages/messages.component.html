@@ -15,7 +15,7 @@
   </div>
 </div>
 
-  <div [hidden]="loadind"  class="row" [ngSwitch]="messages.length">
+  <div [hidden]="loading"  class="row" [ngSwitch]="messages.length">
       <h3 *ngSwitchCase="0">No messages</h3>
       <table *ngSwitchDefault class="table table-hover" style="cursor:pointer">
         <thead>
@@ -27,7 +27,7 @@
          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let message of messages"
+            <tr [hidden]="loading" *ngFor="let message of messages"
             [routerLink]="'/members/' + (container === 'Outbox' ? message.recipientUsername : message.senderUsername)">
             <dt>{{message.content}}</dt>
             <td>
@@ -51,7 +51,7 @@
       </table>
   </div>
 
-  <div class="d-flex justify-content-center" *ngIf="pagination && !loadind">
+  <div class="d-flex justify-content-center" *ngIf="pagination && !loading">
 
     <pagination
     [boundaryLinks]="true"
