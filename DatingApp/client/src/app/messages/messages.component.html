@@ -3,13 +3,13 @@
   </p>
   <div class="row mb-4">
   <div class="btn-group" name="container">
-    <button class="btn btn-primary" btnRadio="Unread" [(ngModel)]="container" (click)="leadMessages()">
+    <button class="btn btn-primary" btnRadio="Unread" [(ngModel)]="container" (click)="loadMessages()">
       <i class="fa fa-envelope"></i>Unread
     </button>
-    <button class="btn btn-primary" btnRadio="Inbox" [(ngModel)]="container" (click)="leadMessages()">
+    <button class="btn btn-primary" btnRadio="Inbox" [(ngModel)]="container" (click)="loadMessages()">
       <i class="fa fa-envelope-open"></i>inbox
     </button>
-    <button class="btn btn-primary" btnRadio="Outbox" [(ngModel)]="container" (click)="leadMessages()">
+    <button class="btn btn-primary" btnRadio="Outbox" [(ngModel)]="container" (click)="loadMessages()">
       <i class="fa fa-paper-plane"></i>Outbox
     </button>
   </div>
@@ -27,13 +27,16 @@
          </tr>
         </thead>
         <tbody>
-            <tr [hidden]="loading" *ngFor="let message of messages"
+            <tr 
+            [hidden]="loading"
+             *ngFor="let message of messages"
+             [queryParams]="{tab:3}"
             [routerLink]="'/members/' + (container === 'Outbox' ? message.recipientUsername : message.senderUsername)">
             <dt>{{message.content}}</dt>
             <td>
                 <ng-container [ngSwitch]="container">
                     <div *ngSwitchCase="'Outbox'">
-                      <img class="img-circle rounded-circle mr-2" [src]="message.recipientPhotoUrl || './assets/user.png'"
+                      <img class="img-circle rounded-circle mr-2" [src]="message.recipientUsername || './assets/user.png'"
                         [alt]="message.recipientUsername">
                       <strong>{{message.recipientUsername | titlecase}}</strong>
                     </div>

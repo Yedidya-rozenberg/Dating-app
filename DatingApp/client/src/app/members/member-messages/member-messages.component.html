@@ -1,6 +1,5 @@
 <div class="card">
-    <div class="card-body">
-  
+    <div class="card-body"> 
       <ng-container *ngIf="messages && messages.length; else noMessages">
         <ul class="chat">
           <li *ngFor="let message of messages">
@@ -30,7 +29,7 @@
         </ul>
       </ng-container>
   
-      <ng-template #noMessages>No messages Yet... say hi bu using the message box bellow</ng-template>
+      <ng-template #noMessages>No messages Yet.</ng-template>
     </div>
     <div class="card-footer">
       <form #messageForm = "ngForm" (ngSubmit)="sendMessage">

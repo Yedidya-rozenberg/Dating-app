@@ -5,11 +5,11 @@ import { MemberDetailComponent } from '../members/member-detail/member-detail.co
 import { Routes, RouterModule } from '@angular/router';
 import { ShardModule } from './shard.module';
 import { MemberMessagesComponent } from '../members/member-messages/member-messages.component';
-import { MemberDetailsResolver } from '../Resolvers/member-details.resolver';
+import { MemberDetailedResolver } from '../Resolvers/member-details.resolver';
 
 export const routes: Routes = [ 
   { path: '', component: MemberListComponent, pathMatch: 'full' },
-  { path: ':username', component: MemberDetailComponent, resolve: MemberDetailsResolver }
+  { path: ':username', component: MemberDetailComponent, resolve:{ member: MemberDetailedResolver }}
 ]
 
 

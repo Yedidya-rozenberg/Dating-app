@@ -20,9 +20,9 @@ export class MessagesComponent implements OnInit {
   constructor(private messageService:MessageService) { }
 
   ngOnInit(): void {
-    this.leadMessages()
+    this.loadMessages()
   }
-  leadMessages(
+  loadMessages(
   ){
     this.loading = true;
     this.messageService.GetMessages(this.pageNumber, this.pageSize, this.container).subscribe(
@@ -37,7 +37,7 @@ export class MessagesComponent implements OnInit {
 //    if(this.pageNumber !== event.page)
 //    {
       this.pageNumber = event.page;
-      this.leadMessages();
+      this.loadMessages();
    // }
   }
   deleteMessage(id:number){
