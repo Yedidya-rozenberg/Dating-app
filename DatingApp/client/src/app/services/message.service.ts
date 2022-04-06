@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Message } from '../models/Message';
 import { getPaginatedResult, getPaginationParams } from './paginationHelper';
@@ -8,24 +9,27 @@ import { getPaginatedResult, getPaginationParams } from './paginationHelper';
   providedIn: 'root'
 })
 export class MessageService {
-baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl;
   constructor(
-    private http:HttpClient
+    private http: HttpClient
   ) { }
-  GetMessages(pageNumber: number, pageSize: number, container:string)
-  {
-    let params = getPaginationParams(pageNumber,pageSize);
+
+  getMessages(pageNumber:number, pageSize:number, container: string) {
+    let params = getPaginationParams(pageNumber, pageSize);
     params = params.append("container", container);
     return getPaginatedResult<Message[]>(`${this.baseUrl}messages`, params, this.http);
   }
-  GetMessagesThread(username:string){
-    return this.http.get<Message[]>(this.baseUrl+`messages/thread/${username}`)
+
+  getMessageThread(username: string) {
+    return this.http.get<Message[]>(`${this.baseUrl}messages/thread/${username}`);
   }
-  sandMessage(username:string, content:string){
-    const creatMessage = {recipientUsername:username, content};
-    return this.http.post(this.baseUrl+"messages", creatMessage);
+
+  sendMessage(username: string, content: string){
+    const createMessage = {recipientUsername:username, content};
+    return this.http.post(this.baseUrl + 'messages', createMessage);
   }
-  deleteMessage(id:number){
-   return this.http.delete(this.baseUrl+`messages/${id}`)
+
+  deleteMessage(id:number): Observable<any>{
+    return this.http.delete(`${this.baseUrl}messages/${id}`);
   }
 }

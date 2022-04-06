@@ -1,8 +1,7 @@
+import { MessageService } from './../services/message.service';
+import { Pagination } from './../models/pagination';
 import { Component, OnInit } from '@angular/core';
 import { Message } from '../models/Message';
-import { Pagination } from '../models/pagination';
-import { UserParams } from '../models/user-params';
-import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-messages',
@@ -15,34 +14,34 @@ export class MessagesComponent implements OnInit {
   container: string = 'Unread';
   pageNumber: number = 1;
   pageSize: number = 5;
-  loading:boolean = false;
-
+  loading: boolean = false;
   constructor(private messageService:MessageService) { }
 
-  ngOnInit(): void {
-    this.loadMessages()
-  }
-  loadMessages(
-  ){
-    this.loading = true;
-    this.messageService.GetMessages(this.pageNumber, this.pageSize, this.container).subscribe(
-      x=> {
-      this.messages = x.result;
-      this.pagination = x.pagination;
-    this.loading = false;
-      })
+  ngOnInit() {
+    this.loadMessages();
   }
 
-  pageChanged(event:any):void{
-//    if(this.pageNumber !== event.page)
-//    {
+  loadMessages() {
+    this.loading = true;
+    this.messageService.getMessages(this.pageNumber, this.pageSize, this.container).subscribe(x => {
+      this.messages = x.result;
+      this.pagination = x.pagination;
+      this.loading = false;
+    });
+  }
+
+  pageChanged(event: any):void {
+    // if(this.pageNumber  !== event.page) {
       this.pageNumber = event.page;
       this.loadMessages();
-   // }
+    // }
   }
-  deleteMessage(id:number){
-    this.messageService.deleteMessage(id).subscribe(()=>
-    {this.messages.splice(this.messages.findIndex(m=>m.id === id),1)});
+  deleteMessage(id:number) {
+    this.messageService.deleteMessage(id).subscribe(() => {
+      // this.messages = this.messages.filter(x => x.id !== id);
+      this.messages.splice(this.messages.findIndex(m => m.id === id), 1);
+    });
   }
+
 
 }

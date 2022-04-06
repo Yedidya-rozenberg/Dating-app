@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { MessageService } from './../../services/message.service';
+import { Message } from './../../models/Message';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Message } from 'src/app/models/Message';
-import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-member-messages',
@@ -9,16 +9,21 @@ import { MessageService } from 'src/app/services/message.service';
   styleUrls: ['./member-messages.component.css']
 })
 export class MemberMessagesComponent implements OnInit {
-@Input() username:string;
-@Input() messages:Message[];
-messageContent:string;
+  @Input() username: string;
+  @Input() messages: Message[];
+  messageContent: string;
 
   constructor(private messageService:MessageService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
   sendMessage(form:NgForm){
-    return this.messageService.sandMessage(this.username, this.messageContent);
+    this.messageService.sendMessage(this.username, this.messageContent)
+    .subscribe((message) => {
+      this.messages.push(message as Message);
+      form.reset();
+    })
   }
+
 }

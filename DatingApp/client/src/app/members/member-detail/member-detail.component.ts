@@ -1,40 +1,44 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { MessageService } from './../../services/message.service';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
-import { Subscription } from 'rxjs';
 import { Member } from 'src/app/models/member';
 import { Message } from 'src/app/models/Message';
 import { MembersService } from 'src/app/services/members.service';
-import { MessageService } from 'src/app/services/message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
-  styleUrls: ['./member-detail.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./member-detail.component.css']
 })
-export class MemberDetailComponent implements OnInit {
-member!:Member;
-messages:Message[] = [];
-galleryOptions!: NgxGalleryOptions[];
-galleryImages!: NgxGalleryImage[];
-@ViewChild("memberTabs", {static:true}) memberTabset:TabsetComponent;
-activeTab:TabDirective;
-subscription: Subscription;
+export class MemberDetailComponent implements OnInit, OnDestroy {
+  member!: Member;
+  galleryOptions!: NgxGalleryOptions[];
+  galleryImages!: NgxGalleryImage[];
+  @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
+  activeTab: TabDirective;
+  messages: Message[] = [];
+  subscription: Subscription;
 
-
-  constructor(private membersService:MembersService, private route: ActivatedRoute, private messageService:MessageService) { }
+  constructor(private memberService: MembersService, private route: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
 
-    
+
     this.route.data.subscribe(data => {
       this.member = data['member'];
+    });
+
+    this.galleryImages = this.getImages();
+
+    this.subscription = this.route.queryParams.subscribe((params: Params) => {
+      this.selectTab(params['tab'] || 0);
     });
 
     this.galleryOptions = [
@@ -45,19 +49,12 @@ subscription: Subscription;
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide,
         preview: false
-      },
-    ];
-
-    this.galleryImages = this.getImages();
-    this.subscription = this.route.queryParams.subscribe((params: Params) => {
-      this.selectTab(params['tab'] || 0);
-    });
+    }];
 
   }
 
-
-  getImages() : NgxGalleryImage[]{
-    const  imgUrls:NgxGalleryImage[] = [];
+  getImages(): NgxGalleryImage[] {
+    const imgUrls: NgxGalleryImage[] = [];
     for (const photo of this.member.photos) {
       imgUrls.push({
         small: photo.url,
@@ -65,20 +62,26 @@ subscription: Subscription;
         big: photo.url
       })
     }
-          return imgUrls;
+    return imgUrls;
   }
-onTabActivate(data:TabDirective){
-this.activeTab = data;
-if(this.activeTab.heading === "Messages" && this.messages.length === 0)
-this.loadMessages();
-}
-loadMessages() {
-  this.messageService.GetMessagesThread(this.member.userName).subscribe(m => {
-    this.messages = m;
-  });
-}
-selectTab(tadId:number){
-this.memberTabset.tabs[tadId].active==true;
-}
+
+
+
+  onTabActivated(data: TabDirective) {
+    this.activeTab = data;
+    if (this.activeTab.heading === "Messages" && this.messages.length === 0) {
+      this.loadMessages();
+    }
+  }
+
+  loadMessages() {
+    this.messageService.getMessageThread(this.member.userName).subscribe(m => {
+      this.messages = m;
+    });
+  }
+
+  selectTab(tabId: number) {
+    this.memberTabs.tabs[tabId].active = true;
+  }
 
 }
