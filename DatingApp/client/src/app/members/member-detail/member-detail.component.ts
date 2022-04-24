@@ -7,6 +7,7 @@ import { Member } from 'src/app/models/member';
 import { Message } from 'src/app/models/Message';
 import { MembersService } from 'src/app/services/members.service';
 import { Subscription } from 'rxjs';
+import { PresenceService } from 'src/app/services/presence.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -22,7 +23,10 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   subscription: Subscription;
 
-  constructor(private memberService: MembersService, private route: ActivatedRoute, private messageService: MessageService) { }
+  constructor(private memberService: MembersService, 
+              private route: ActivatedRoute, 
+              private messageService: MessageService,
+              public presence:PresenceService) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

@@ -8,6 +8,9 @@
                     <strong>Location:</strong>
                     <p>{{member.city}}, {{member.country}}</p>
                 </div>
+                <div class="mb-2" *ngIf="(presence.onlineUsers$ | async)?.includes(member.userName)">
+                    <i class="fa fa-user-circle text-success"></i>Online now
+                </div>
                 <div>
                     <strong>Age:</strong>
                     <p>{{member.age}}</p>

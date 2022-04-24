@@ -1,3 +1,4 @@
+import { PresenceService } from './services/presence.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './services/account.service';
@@ -11,7 +12,7 @@ export class AppComponent implements  OnInit {
   title = 'The dating app';
   users:any;
 
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(private http: HttpClient, private accountService: AccountService, private presenceService:PresenceService) {
 
   }
   ngOnInit(): void {
@@ -22,7 +23,10 @@ this.setCurrentUser();
   setCurrentUser() {
     const userFromLS:any = localStorage.getItem('user');
     const user = JSON.parse(userFromLS);
-    this.accountService.setCurrentUser(user);
+    if(user){
+          this.accountService.setCurrentUser(user);
+          this.presenceService.createHubConnection(user)
+    }
   }
 //   GetUsers() {
 // this.http.get('https://localhost:5001/api/users').subscribe(
